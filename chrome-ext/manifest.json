@@ -1,0 +1,32 @@
+{
+  "name": "Music Quick Search",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "background": {
+    "scripts": [
+      "src/bg/background.js"
+    ],
+    "persistent": true
+  },
+
+  "options_page": "/src/options/index.html",
+
+  "browser_action": {
+    "default_icon": "icons/icon48.png"
+  },
+
+  "permissions": [
+    "contextMenus",
+    "tabs",
+	"storage",
+	"https://localhost/*",
+	"http://localhost/*"
+  ]
+}

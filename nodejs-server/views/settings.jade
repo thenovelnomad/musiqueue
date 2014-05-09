@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	script(src="/javascripts/settingsPage.js")
+	.container
+		#main
+			.row
+				.col-md-9
+					.col-md-8
+						h3
+							img(src='/images/icon48.png')
+							| Music Quick Search <small>Options</small>
+						#not-auth
+							h3 Extension has not been authenticated with Rdio. Please authenticate.
+						form(role='form')
+							.form-group
+								p Select a playlist to use when adding searched tracks/albums.
+								select#playlist-select.form-control
+									option(value='None', selected) Need to authenticate prior to selection
+							.form-group
+								button#auth-btn.btn.btn-default(type='button',data-function='save') Authenticate
+				#now-play.col-md-3.text-center
+					h3 <small>Currently Playing</small>
+					#album-art
+	.clearfix
+

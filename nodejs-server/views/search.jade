@@ -1,0 +1,17 @@
+extends layout
+
+block content
+	script(src="/javascripts/searchPage.js")
+	div(id="query",data-type= type, data-key= key)
+	div(class="col-md-6",id="search-results", style="padding-top: 10px")
+	div(id="result-options" class="hidden")
+		div(class="col-md-4")
+			div(class="btn-group pull-left")
+				button(type="button",class="btn btn-default",title="Play Now")
+					span(class="glyphicon glyphicon-play") 
+				button(type="button",class="btn btn-default",title="Add to Queue")
+					span(class="glyphicon glyphicon-chevron-right")
+				button(type="button",class="btn btn-default",title="Add to Playlist")
+					span(class="glyphicon glyphicon-plus")
+				button(type="button",class="btn btn-default",title="Add to Collection")
+					span(class="glyphicon glyphicon-save")
