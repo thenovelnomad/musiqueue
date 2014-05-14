@@ -1,6 +1,6 @@
 {
   "name": "Music Quick Search",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "manifest_version": 2,
   "description": "",
   "icons": {
@@ -18,15 +18,11 @@
 
   "options_page": "/src/options/index.html",
 
-  "browser_action": {
-    "default_icon": "icons/icon48.png"
-  },
-
   "permissions": [
     "contextMenus",
     "tabs",
 	"storage",
-	"https://localhost/*",
-	"http://localhost/*"
+	"https://rocky-hollows-7945.herokuapp.com/*",
+	"http://rocky-hollows-7945.herokuapp.com/*"
   ]
 }

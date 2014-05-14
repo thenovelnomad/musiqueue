@@ -1,123 +1,94 @@
 (function() {
 	// initiate main object on window
 	window.Main = {
-		results: {},
+		playlistKey: "",
 		
-		actions: {
-			"Play Now": function(id){
-				key = Main.results[id].key;
-				R.player.play({source: key});
-			},
-			"Add to Queue": function(id){
-				key = Main.results[id].key;
-				R.player.queue.add(key);
-				R.player.queue.on("add", function(model, collection, info) {
-				  console.log("Source " + model.get("name") + " added to queue at " + info.index);
-				})
-			},
-			"Add to Playlist": function(id){
-				var key = Main.results[id].key;
-				var type = Main.results[id].type;
-				
-				$.get('/settings/get', function(data) {
-					if (!data) {
-						alert("There was an error retrieving your playlist key. Please try again.");
-					}
-					else {
-						var playlistKey = data;
-						
-						if (type == "a"){
-							key = "";
-							var trackKeys = Main.results[id].trackKeys;
-							while (trackKeys.length > 0) {
-								key += trackKeys.shift() + ",";
-							};
-						}
-
-						R.request({
-							method: "addToPlaylist",
-							content: {
-								playlist: playlistKey,
-								tracks: key
-							},
-							success: function(response){
-								console.log(Main.results[id].name + "successfully added to playlist.");
-							},
-							error: function(response) {
-						    	console.log("Error with add to playlist for " + key + ": " + response.message);
-						  	}
-						});
-					}
-				});
-			},
-			"Add to Collection": function(id){
-				key = Main.results[id].key;
-				R.request({
-					method: "addToCollection",
-					content: {keys: key},
-					success: function(response){
-						console.log(Main.results[id].name + "successfully added to collection.");
-					},
-					error: function(response) {
-				    	console.log("error with add to collection for " + key + ": " + response.message);
-				  	}
-				});
-			}
+		getPlaylistKey: function() {
+			var self = this;
+			console.log(self);
+			
+			$.get('/settings/get', function(data) {
+				if (!data || typeof data === 'undefined') {
+					console.log("There was an error retrieving your playlist key. Please try again.");
+				}
+				else {
+					self.playlistKey = data;
+				}
+			});
 		},
 			
-    	init: function() {
-      		var self = this;
+		init: function() {
+     		var self = this;
+
+			self.getPlaylistKey();
 
 			//Initiate rdio API
-		    R.ready(function() {
+			R.ready(function() {
+				self.spin(false);
 				if (!R.authenticated) {
 					$.get('./');
 				}
 				else {
 					var query = $("#query").data();
-					console.log(query);
 					self.search(query, function(results) {
-						self.displayResults(results);
+						resultHandler.displayResults(results);
+						nowPlay.load(function(data) {
+							if (data) {
+								$("#now-play").fadeIn();
+							}
+						});
 					});
 				}
 				
+				R.player.on("change:playingTrack", function(newValue) {
+					nowPlay.load(function(data) {
+						if (data) {
+							$("#now-play").fadeIn();
+						}
+					});
+				});
+				
+				R.player.on("change:playState", function(newValue) {
+					nowPlay.stateToggle(newValue);
+				});
+				
 				$("#search-results").on("click", "button", function() {
-					var action = $(this).attr("title");
-					var id = $(this).closest("div[id^='result']")
-									.attr("id")
-									.replace("result-","");
-					var type = self.results[id].type;
-					console.log(action);
-
-					self.actions[action](id);
+					var button = $(this);
+					resultHandler.clickHandler(button);
+				});
+				
+				$("#now-play").on("mouseup","button", function() {
+					var button = $(this);
+					nowPlay.clickHandler(button);
 				});
 			});
+			
+			self.spin(true);
 		},
 		
 		search: function(query,callback) {
-			var self = this;
 			R.request({
 				method: "search",
 				content: {
 					query: query.key,
 					types: query.type,
-					count: 5,
+					count: 5
 				},
 				success: function(response) {
-					self.results = response.result.results;
+					resultHandler.results = response.result.results;
 					if (query.type != "Artist"){
 						if (typeof callback == "function") {
-							callback(self.results);
+							callback(resultHandler.results);
 						}
 					}
 					else{
-						var artistKey = self.results[0].key;
-						self.artistTracks(artistKey, callback);
+						var artistKey = resultHandler.results[0].key;
+						Main.artistTracks(artistKey, callback);
 					}
 				},
-			  	error: function(response) {
-			    	console.log("error with search for " + query.key + "of type " + query.type +": " + response.message);
-			  	}
+				error: function(response) {
+					console.log("error with search for " + query.key + "of type " + query.type +": " + response.message);
+				}
 			});
 		},
 		
@@ -128,46 +99,48 @@
 				method: "getTracksForArtist",
 				content: {
 					artist: key,
-					count: 5,
+					count: 5
 				},
 				success: function(response) {
-					self.results = response.result;
+					resultHandler.results = response.result;
 					if (typeof callback == "function") {
-						callback(self.results);
+						callback(resultHandler.results);
 					}
 				},
-			  	error: function(response) {
-			    	console.log("error with search for " + key + ": " + response.message);
-			  	}
+				error: function(response) {
+					console.log("error with search for " + key + ": " + response.message);
+				}
 			});
 		},
 		
-		displayResults: function(results, callback) {
-			function parseData(track) {
-				var container = $("<div class=\"col-md-6\"></div>");
-				container.append("<h4><a href=\"" + track.shortUrl + "\">" + track.name + " - " + track.artist + "</a></h4>");
-				return container;
+		spin: function(value) {
+			var opts = {
+			  lines: 11, // The number of lines to draw
+			  length: 25, // The length of each line
+			  width: 4, // The line thickness
+			  radius: 50, // The radius of the inner circle
+			  corners: 1, // Corner roundness (0..1)
+			  rotate: 0, // The rotation offset
+			  direction: 1, // 1: clockwise, -1: counterclockwise
+			  color: '#000', // #rgb or #rrggbb or array of colors
+			  speed: 0.8, // Rounds per second
+			  trail: 74, // Afterglow percentage
+			  shadow: false, // Whether to render a shadow
+			  hwaccel: false, // Whether to use hardware acceleration
+			  className: 'spinner', // The CSS class to assign to the spinner
+			  zIndex: 2e9, // The z-index (defaults to 2000000000)
+			  top: '50%', // Top position relative to parent
+			  left: '50%' // Left position relative to parent
 			};
-
-			console.log("In display");
-			console.log(results);
-
-			var node = $("#search-results");
-
-			for (var i = 0; i < results.length; i++) {
-				var resultInfo = parseData(results[i]);
-				var buttons = $("#result-options").clone()
-												  .removeAttr("id")
-												  .removeClass("hidden");
-				node.append($("<div id=\"result-"+i+"\" class=\"row\"></div>"));
-
-				$("#result-"+ i).append(buttons)
-							    .append(resultInfo);
-			};
-		}
+	    	if (value) {
+	    		this.spinner = new Spinner(opts).spin($("body")[0]);     
+	    	} else {
+	    		this.spinner.stop();
+	    	}
+	    }
 	};
 			
 	$(document).ready(function() {
-	    Main.init();
+		Main.init();
 	});
-})()
+})();

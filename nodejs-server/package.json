@@ -1,5 +1,5 @@
 {
-  "name": "Music Quick Search",
+  "name": "music-quick-search",
   "version": "0.0.1",
   "private": true,
   "main": "./bin/www",
@@ -14,7 +14,7 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/thenovelnomad/rdio-quick-search-chrome-ext/issues"
-  }
+  },
   "dependencies": {
     "express": "~4.0.0",
     "static-favicon": "~1.0.0",

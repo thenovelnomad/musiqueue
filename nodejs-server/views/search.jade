@@ -2,16 +2,28 @@ extends layout
 
 block content
 	script(src="/javascripts/searchPage.js")
-	div(id="query",data-type= type, data-key= key)
-	div(class="col-md-6",id="search-results", style="padding-top: 10px")
-	div(id="result-options" class="hidden")
-		div(class="col-md-4")
-			div(class="btn-group pull-left")
-				button(type="button",class="btn btn-default",title="Play Now")
-					span(class="glyphicon glyphicon-play") 
-				button(type="button",class="btn btn-default",title="Add to Queue")
-					span(class="glyphicon glyphicon-chevron-right")
-				button(type="button",class="btn btn-default",title="Add to Playlist")
-					span(class="glyphicon glyphicon-plus")
-				button(type="button",class="btn btn-default",title="Add to Collection")
-					span(class="glyphicon glyphicon-save")
+	#query.row.col-md-12(data-type= type, data-key= key)
+		#search-results
+		#now-play.result-col.text-center
+			a.text-center.small.white(href="#")
+			img(src="")
+			.btn-group
+				button#main-back(type="button",class="btn white",title="Previous")
+					span.glyphicon.glyphicon-step-backward 
+				button#main-play(type="button",class="btn white",title="Play")
+					span.glyphicon.glyphicon-play
+				button#main-next(type="button",class="btn white",title="Next")
+					span.glyphicon.glyphicon-step-forward
+	.row
+		#result-options.result-col.hidden.text-center
+			a.text-center.small.blue(href="#")
+			img(src="")
+			.btn-group
+				button(type="button",class="btn btn",title="Play Now")
+					span.glyphicon.glyphicon-play 
+				button(type="button",class="btn btn",title="Add to Queue")
+					span.glyphicon.glyphicon-chevron-right
+				button(type="button",class="btn btn",title="Add to Playlist")
+					span.glyphicon.glyphicon-plus
+				button(type="button",class="btn btn",title="Add to Collection")
+					span.glyphicon.glyphicon-save

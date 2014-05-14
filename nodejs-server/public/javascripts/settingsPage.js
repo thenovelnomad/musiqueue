@@ -32,10 +32,12 @@
 						$.get('/settings/get', function(data) {
 							console.log(data);
 							$("#playlist-select").val(data);
+							$("#main").fadeIn();
 							
-							self.nowPlay(function() {
-								$("#main").fadeIn();
-								$("#now-play").fadeIn();
+							self.nowPlay(function(data) {
+								if (data) {
+									$("#now-play").fadeIn();
+								}
 							});
 						});
 					});
@@ -61,21 +63,28 @@
 		nowPlay: function(callback) {
 			var track = R.player.playingTrack();
 
-			if (track) {
+			if (track !== null) {
 				artist = track.get('artist') || '';
 		      	album = track.get('album') || '';
 		      	trackName = track.get('name') || '';
 				url = track.get('shortUrl') || '';
 		      	albumCover = track.get('icon');
+		
+				var albumArt = $("<img src=\"" + albumCover + "\" alt=\"Album Art\" class=\"img-rounded\">");
+				var songLink = $("<p class=\"text-center\"><a href=\"" + url + "\">" + trackName + " - " + artist + "</a></p>");
+
+				$("#album-art").append(albumArt);
+				$("#album-art").append(songLink);
+				
+				if (typeof callback == "function") {
+					callback(true);
+				}
 		    }
-
-			var albumArt = $("<img src=\"" + albumCover + "\" alt=\"Album Art\" class=\"img-rounded\">");
-			var songLink = $("<p class=\"text-center\"><a href=\"" + url + "\">" + trackName + " - " + artist + "</a></p>");
-
-			$("#album-art").append(albumArt);
-			$("#album-art").append(songLink);
-			
-			callback();
+			else {
+				if (typeof callback == "function") {
+					callback(false);
+				}
+			}
 		},
 		
 		loadPlaylists: function(callback) {

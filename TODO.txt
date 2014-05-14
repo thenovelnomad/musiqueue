@@ -1,0 +1,4 @@
+music extension
+	TO DO
+		move played item to first position in queue and the next track to start playing
+		modal window in browser?
