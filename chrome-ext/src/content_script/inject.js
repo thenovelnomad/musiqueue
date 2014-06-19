@@ -15,13 +15,13 @@ function frameHandler(active, url) {
 
 	if (typeof url == "undefined") {
 		if (typeof localStorage["mq-last"] == "undefined") {
-			url = "http://localhost:5000/query";
+			url = "http://musiqueue.herokuapp.com/query";
 		} else {
 			url = localStorage["mq-last"];
 		}
 	} 
 
-	if (url === "http://localhost:5000/query") {
+	if (url === "http://musiqueue.herokuapp.com/query") {
 		frame.setAttribute('height', '75px');
 	} else {
 		frame.setAttribute('height', '350px');

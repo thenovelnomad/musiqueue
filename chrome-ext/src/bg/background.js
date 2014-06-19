@@ -3,7 +3,7 @@ function onClickHandler(info, tab) {
 	var key = info.selectionText;
 	var menu = info.menuItemId;
 	console.log(menu + ": " + key);
-	var url = "http://localhost:5000/query?key=" + key + "&type=" + menu;
+	var url = "http://musiqueue.herokuapp.com/query?key=" + key + "&type=" + menu;
 	
 	var tabId = tab.id;
 

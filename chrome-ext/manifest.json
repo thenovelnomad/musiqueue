@@ -1,5 +1,5 @@
 {
-  "name": "Music Quick Search",
+  "name": "MusiQueue",
   "version": "0.2.0",
   "manifest_version": 2,
   "description": "",
@@ -34,8 +34,7 @@
     "contextMenus",
     "tabs",
 	  "storage",
-	  "https://rocky-hollows-7945.herokuapp.com/*",
-	  "http://rocky-hollows-7945.herokuapp.com/*",
-    "*://*/*"
+	  "https://musiqueue.herokuapp.com/*",
+	  "http://musiqueue.herokuapp.com/*",
   ]
 }
