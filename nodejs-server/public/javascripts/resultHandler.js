@@ -59,6 +59,10 @@
 		displayResults: function(results, callback) {
 			var node = $("#search-results");
 
+			if (results.length === 0) {
+				node.append("<h3>No results returned</h3>");
+			}
+
 			for (var i = 0; i < results.length; i++) {
 				var container = $("#result-options").clone().removeAttr("id").removeClass("hidden");
 				container.attr("id","result-" + i);

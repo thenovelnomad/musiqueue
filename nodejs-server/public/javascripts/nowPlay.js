@@ -20,14 +20,13 @@
 		    	album = track.get('album') || '';
 		    	trackName = track.get('name') || '';
 				url = track.get('shortUrl') || '';
-		    	albumCover = track.get('icon');
+		    	albumCover = track.get('icon').replace('200.jpg', '1200.jpg');
 				
 				$("#now-play").find(".track-info").remove();
 				
 				$("#now-play").find("a").attr("href", url);
-				$("#now-play").find("a").append("<div class=\'track-info\'>" + trackName + "</div>");
-				$("#now-play").find("a").append("<div class=\'track-info\'>" + artist + "</div>");
-				$("#now-play").find("img").attr("src", albumCover);
+				$("#now-play").find("a").html("<h3 class=\"track-info\">" + trackName + " - " + artist + "</h3>");
+				$("img.bg").attr("src", albumCover);
 				
 				if (typeof callback == "function") {
 					callback(true);

@@ -1,6 +1,6 @@
 {
   "name": "Music Quick Search",
-  "version": "0.0.3",
+  "version": "0.2.0",
   "manifest_version": 2,
   "description": "",
   "icons": {
@@ -10,19 +10,32 @@
   },
 
   "background": {
-    "scripts": [
-      "src/bg/background.js"
-    ],
+    "scripts": ["src/bg/background.js"],
     "persistent": true
   },
+
+  "browser_action": {
+    "default_icon": "icons/icon16bw.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*",
+        "https://*/*"
+      ],
+      "js": ["src/content_script/inject.js"]
+    }
+  ],
 
   "options_page": "/src/options/index.html",
 
   "permissions": [
     "contextMenus",
     "tabs",
-	"storage",
-	"https://rocky-hollows-7945.herokuapp.com/*",
-	"http://rocky-hollows-7945.herokuapp.com/*"
+	  "storage",
+	  "https://rocky-hollows-7945.herokuapp.com/*",
+	  "http://rocky-hollows-7945.herokuapp.com/*",
+    "*://*/*"
   ]
 }

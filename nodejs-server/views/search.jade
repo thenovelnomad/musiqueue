@@ -2,21 +2,34 @@ extends layout
 
 block content
 	script(src="/javascripts/searchPage.js")
-	#query.row.col-md-12(data-type= type, data-key= key)
-		#search-results
-		#now-play.result-col.text-center
-			a.text-center.small.white(href="#")
-			img(src="")
-			.btn-group
-				button#main-back(type="button",class="btn white",title="Previous")
-					span.glyphicon.glyphicon-step-backward 
-				button#main-play(type="button",class="btn white",title="Play")
-					span.glyphicon.glyphicon-play
-				button#main-next(type="button",class="btn white",title="Next")
-					span.glyphicon.glyphicon-step-forward
+	base(target="_blank")
+	img.bg
+	#control-bar
+		span Music Quick Search
+		//.btn-group.pull-right
+		//	button#exit.btn.btn-sm(type="button", title="Pop-out")
+		//		span.glyphicon.glyphicon-new-window
+		//	button#exit.btn.btn-sm(type="button", title="Minimize")
+		//		span.glyphicon.glyphicon-save
+		//	button#exit.btn.btn-sm(type="button", title="Exit")
+		//		span.glyphicon.glyphicon-remove
+	.content
+		#query.clearfix(data-type= type, data-key= key)
+			#search-results
+		#now-play.text-center
+			.btn-col.pull-left.clearfix
+				.btn-group.text-center
+					button#main-back(type="button",class="btn btn-lg white",title="Previous")
+						span.glyphicon.glyphicon-step-backward 
+					button#main-play(type="button",class="btn btn-lg white",title="Play")
+						span.glyphicon.glyphicon-play
+					button#main-next(type="button",class="btn btn-lg white",title="Next")
+						span.glyphicon.glyphicon-step-forward
+			.link-col.pull-left.clearfix
+				a.text-center.small.white(href="#")
 	.row
 		#result-options.result-col.hidden.text-center
-			a.text-center.small.blue(href="#")
+			a.text-center.small.white(href="#")
 			img(src="")
 			.btn-group
 				button(type="button",class="btn btn",title="Play Now")

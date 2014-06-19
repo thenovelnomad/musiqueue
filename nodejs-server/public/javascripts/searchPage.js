@@ -32,11 +32,11 @@
 					var query = $("#query").data();
 					self.search(query, function(results) {
 						resultHandler.displayResults(results);
-						nowPlay.load(function(data) {
-							if (data) {
-								$("#now-play").fadeIn();
-							}
-						});
+					});
+					nowPlay.load(function(data) {
+						if (data) {
+							$("#now-play").fadeIn();
+						}
 					});
 				}
 				
@@ -116,9 +116,9 @@
 		spin: function(value) {
 			var opts = {
 			  lines: 11, // The number of lines to draw
-			  length: 25, // The length of each line
+			  length: 20, // The length of each line
 			  width: 4, // The line thickness
-			  radius: 50, // The radius of the inner circle
+			  radius: 25, // The radius of the inner circle
 			  corners: 1, // Corner roundness (0..1)
 			  rotate: 0, // The rotation offset
 			  direction: 1, // 1: clockwise, -1: counterclockwise
