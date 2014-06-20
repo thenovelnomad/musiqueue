@@ -35,6 +35,6 @@
     "tabs",
 	  "storage",
 	  "https://musiqueue.herokuapp.com/*",
-	  "http://musiqueue.herokuapp.com/*",
+	  "http://musiqueue.herokuapp.com/*"
   ]
 }
