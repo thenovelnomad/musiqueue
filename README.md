@@ -1,4 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/thenovelnomad/musiqueue.png?label=ready&title=Ready)](https://waffle.io/thenovelnomad/musiqueue)
 MusiQueue
 ============================
 
@@ -16,3 +15,4 @@ Performing an Artist search, finds the first resulting artist for your search an
 Currently, if you directly play a track and close the popup, the track will stop playing. Will try to change this behavior.
 
 
+[![Stories in Ready](https://badge.waffle.io/thenovelnomad/musiqueue.png?label=ready&title=Ready)](https://waffle.io/thenovelnomad/musiqueue)
